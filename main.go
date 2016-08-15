@@ -81,11 +81,6 @@ func Exists(filename string) bool {
 
 func PostMessageToSlack(slackApi *slack.Client, channel slack.Channel, text string) error {
 	/// post message
-	params := slack.NewPostMessageParameters()
-	_, _, err := slackApi.PostMessage(channel.ID, text, params) /// PostMessage function is changed now on github, to rewrite here when package updated
-	if err != nil {
-		return err
-	}
 	return nil
 }
 
@@ -164,7 +159,10 @@ func main() {
 	for _, name := range keys {
 		if BinSearch(stored, name) == -1 {
 			/// Post New Emoji to emoji channel
-			err = PostMessageToSlack(slackApi, channel, "Today's New Emoji :"+name+":")
+            params := slack.NewPostMessageParameters()
+            params.Username = "Today's New Emoji"
+            params.IconEmoji = ":tada:"
+            _, _, err := slackApi.PostMessage(channel.ID, "Today's New Emoji :"+name+":", params) /// PostMessage function is changed now on github, to rewrite here when package updated
 			if err != nil {
 				fmt.Fprintln(os.Stderr, err)
 			}
