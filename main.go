@@ -6,6 +6,7 @@ import (
 	"github.com/nlopes/slack"
 	"os"
 	"sort"
+    "strings"
 )
 
 // Get keys Array from Map
@@ -153,22 +154,26 @@ func main() {
 
 	/// Restore Yesterday's Emojis
 	var stored sort.StringSlice
-	Load("emojis.gob", &stored)
+	Load(saveFileName, &stored)
+
+    newEmojis := make([]string)
 
 	/// Find New (Non Exists in Yesterday) Emojis
 	for _, name := range keys {
 		if BinSearch(stored, name) == -1 {
-			/// Post New Emoji to emoji channel
-            params := slack.NewPostMessageParameters()
-            params.Username = "Today's New Emoji"
-            params.IconEmoji = ":tada:"
-            _, _, err := slackApi.PostMessage(channel.ID, "Today's New Emoji :"+name+":", params) /// PostMessage function is changed now on github, to rewrite here when package updated
-			if err != nil {
-				fmt.Fprintln(os.Stderr, err)
-			}
+            newEmojis = append(newEmojis, ":" + name + ":")
 		}
 	}
 
+    /// Post New Emoji to emoji channel
+    params := slack.NewPostMessageParameters()
+    params.Username = "Today's New Emoji"
+    params.IconEmoji = ":tada:"
+    _, _, err := slackApi.PostMessage(channel.ID, strings.Join(newEmojis, " "), params) /// PostMessage function is changed now on github, to rewrite here when package updated
+    if err != nil {
+        fmt.Fprintln(os.Stderr, err)
+    }
+
 	/// Store Today's Emojis
-	Save("emojis.gob", keys)
+	Save(saveFileName, keys)
 }
