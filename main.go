@@ -169,7 +169,7 @@ func main() {
     params := slack.NewPostMessageParameters()
     params.Username = "Today's New Emoji"
     params.IconEmoji = ":tada:"
-    _, _, err := slackApi.PostMessage(channel.ID, strings.Join(newEmojis, " "), params) /// PostMessage function is changed now on github, to rewrite here when package updated
+    _, _, err = slackApi.PostMessage(channel.ID, strings.Join(newEmojis, " "), params) /// PostMessage function is changed now on github, to rewrite here when package updated
     if err != nil {
         fmt.Fprintln(os.Stderr, err)
     }
