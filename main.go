@@ -156,7 +156,7 @@ func main() {
 	var stored sort.StringSlice
 	Load(saveFileName, &stored)
 
-    newEmojis := make([]string)
+    newEmojis := make([]string, 0, 10)
 
 	/// Find New (Non Exists in Yesterday) Emojis
 	for _, name := range keys {
