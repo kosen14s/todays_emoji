@@ -1,0 +1,16 @@
+{
+	"ImportPath": "github.com/kosen14s/todays_emoji",
+	"GoVersion": "go1.7",
+	"GodepVersion": "v78",
+	"Deps": [
+		{
+			"ImportPath": "github.com/nlopes/slack",
+			"Comment": "v0.0.1-166-g77d2318",
+			"Rev": "77d2318fa88fcba8e9561e87f951ce32d747c751"
+		},
+		{
+			"ImportPath": "golang.org/x/net/websocket",
+			"Rev": "f2499483f923065a842d38eb4c7f1927e6fc6e6d"
+		}
+	]
+}
